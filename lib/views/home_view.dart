@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ososs/models/user.dart';
+import 'package:ososs/providers/pokemon_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/base_provider.dart';
+import '../providers/shape_provider.dart';
 import '../providers/user_provider.dart';
+import '../routing/app_router.dart';
 import '../styles/app_colors.dart';
 import '../styles/app_styles.dart';
 
@@ -128,7 +133,10 @@ class _HomeViewState extends State<HomeView> {
             width: width / 1.1,
             height: 50,
             child: ElevatedButton(
-                onPressed: null,
+                onPressed: () async {
+                  context.read<ShapeProvider>().getAllShapes();
+                  context.go(AppRouter.ANIMATION_VIEW);
+                },
                 child: Text("Go to Page 1"),
                 style: AppStyles.primaryButtonStyle),
           ),
@@ -139,7 +147,11 @@ class _HomeViewState extends State<HomeView> {
             width: width / 1.1,
             height: 50,
             child: ElevatedButton(
-                onPressed: null,
+                onPressed: () async {
+                  await context.read<PokemonProvider>().getAllPokemons();
+                  context.read<BaseProvider>().setIsLoading(true);
+                  context.go(AppRouter.POKEMON_VIEW);
+                },
                 child: Text("Go to Page 2"),
                 style: AppStyles.darkPrimaryButtonStyle),
           ),

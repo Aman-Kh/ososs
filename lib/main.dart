@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:ososs/providers/base_provider.dart';
+import 'package:ososs/providers/pokemon_provider.dart';
 import 'package:ososs/routing/app_router.dart';
 import 'package:ososs/views/home_view.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/home_provider.dart';
+import 'providers/shape_provider.dart';
 import 'providers/user_provider.dart';
 
 void main() {
@@ -25,6 +27,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<BaseProvider>(create: (_) => BaseProvider()),
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
         ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
+        ChangeNotifierProvider<ShapeProvider>(create: (_) => ShapeProvider()),
+        ChangeNotifierProvider<PokemonProvider>(
+            create: (_) => PokemonProvider()),
       ],
       child: MaterialApp.router(
         routerConfig: AppRouter.router,

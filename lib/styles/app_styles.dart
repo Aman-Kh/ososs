@@ -3,6 +3,17 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class AppStyles {
+  TextStyle appBarTextStyle = TextStyle(
+    color: AppColors.primaryColor,
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+  );
+
+  TextStyle appBarBlackTextStyle = TextStyle(
+    color: AppColors.blackColor,
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+  );
   static ButtonStyle primaryButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(AppColors.primaryColor),
     foregroundColor: MaterialStateProperty.all(AppColors.whiteColor),

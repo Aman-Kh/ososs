@@ -47,10 +47,9 @@ class _HomeViewState extends State<HomeView> {
         title: Text('Home'),
       ),
       body: Column(
-        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            color: Colors.teal,
             height: 70,
             padding: const EdgeInsets.all(10),
             width: width,
@@ -58,22 +57,8 @@ class _HomeViewState extends State<HomeView> {
               builder: (_, provider, __) {
                 return TextFormField(
                   controller: nameController,
-                  validator: (value) {
-                    if (nameController.text.isEmpty) {
-                      return "Name is empty ";
-                    } else {
-                      return null;
-                    }
-                  },
                   onChanged: (value) {
                     context.read<UserProvider>().setUserName(value);
-                    /*setState(() {
-                    if (value.isNotEmpty) {
-                      isNameControllerFilled = true;
-                    } else {
-                      isNameControllerFilled = false;
-                    }
-                  });*/
                   },
                   autovalidateMode: AutovalidateMode.always,
                   style: AppStyles.blackSmallBoldTextStyle,
@@ -82,9 +67,6 @@ class _HomeViewState extends State<HomeView> {
                   focusNode: nameFocusNode,
                   inputFormatters: const [],
                   decoration: InputDecoration(
-                    //labelText: 'Enter your name',
-                    /*labelStyle:
-                      TextStyle(fontSize: 13, color: AppColors.darkGreyColor),*/
                     hintText: 'Enter your name',
                     focusedBorder: UnderlineInputBorder(
                       borderSide:
@@ -104,19 +86,35 @@ class _HomeViewState extends State<HomeView> {
             builder: (_, userName, __) {
               print("I GOT INTO SELECTOR");
               return Container(
-                  height: 50,
-                  width: width,
-                  padding: EdgeInsets.all(5),
+                  height: 100,
                   //color: Colors.orange,
+                  width: width,
+                  padding:
+                      EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5),
                   child: Center(
-                      child: Text(userName.isEmpty ? "your name" : userName)));
+                      child: Text(
+                    userName.isEmpty ? "your name" : userName,
+                    style: AppStyles.blackSmallBoldTextStyle.copyWith(
+                      color: AppColors.blackColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  )));
             },
           ),
-          Container(
-            height: 80,
-            //color: Colors.orange.shade100,
-            child: Center(
-              child: Row(children: [
+          SizedBox(
+            height: 300,
+          ),
+          InkWell(
+            onTap: () {
+              nameController.clear();
+              context.read<UserProvider>().setUserName('');
+            },
+            child: Container(
+              height: 80,
+              padding: EdgeInsets.only(top: 10, bottom: 5, right: 5, left: 5),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Icon(
                   Icons.delete,
                   size: 20,
@@ -124,7 +122,10 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 Text(
                   "Clear text",
-                  style: TextStyle(color: AppColors.darkRedColor),
+                  style: AppStyles.blackSmallBoldTextStyle.copyWith(
+                    color: AppColors.darkRedColor,
+                    fontSize: 15,
+                  ),
                 )
               ]),
             ),
@@ -135,24 +136,37 @@ class _HomeViewState extends State<HomeView> {
             child: ElevatedButton(
                 onPressed: () async {
                   context.read<ShapeProvider>().getAllShapes();
-                  context.go(AppRouter.ANIMATION_VIEW);
+                  //context.go(AppRouter.ANIMATION_VIEW);
+                  GoRouter.of(context).push(AppRouter.ANIMATION_VIEW);
                 },
-                child: Text("Go to Page 1"),
+                child: Text(
+                  "Go to Page 1",
+                  style: AppStyles.blackSmallBoldTextStyle.copyWith(
+                    color: AppColors.whiteColor,
+                    fontSize: 15,
+                  ),
+                ),
                 style: AppStyles.primaryButtonStyle),
           ),
           SizedBox(
-            height: 30,
+            height: 20,
           ),
           Container(
             width: width / 1.1,
             height: 50,
             child: ElevatedButton(
                 onPressed: () async {
-                  await context.read<PokemonProvider>().getAllPokemons();
-                  context.read<BaseProvider>().setIsLoading(true);
-                  context.go(AppRouter.POKEMON_VIEW);
+                  context.read<PokemonProvider>().getAllPokemons();
+
+                  GoRouter.of(context).push(AppRouter.POKEMON_VIEW);
                 },
-                child: Text("Go to Page 2"),
+                child: Text(
+                  "Go to Page 2",
+                  style: AppStyles.blackSmallBoldTextStyle.copyWith(
+                    color: AppColors.whiteColor,
+                    fontSize: 15,
+                  ),
+                ),
                 style: AppStyles.darkPrimaryButtonStyle),
           ),
         ],

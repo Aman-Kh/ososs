@@ -39,7 +39,7 @@ class Pokemon {
       this.weight});
 
   Pokemon.fromJson(Map<String, dynamic> json) {
-    if (json['abilities'] != null) {
+    /*if (json['abilities'] != null) {
       abilities = <Abilities>[];
       json['abilities'].forEach((v) {
         abilities!.add(new Abilities.fromJson(v));
@@ -73,9 +73,9 @@ class Pokemon {
       json['moves'].forEach((v) {
         moves!.add(new Moves.fromJson(v));
       });
-    }
+    }*/
     name = json['name'];
-    order = json['order'];
+    /*order = json['order'];
     if (json['past_types'] != null) {
       pastTypes = <PastTypes>[];
       json['past_types'].forEach((v) {
@@ -84,9 +84,10 @@ class Pokemon {
     }
     species =
         json['species'] != null ? Ability.fromJson(json['species']) : null;
+        */
     sprites =
         json['sprites'] != null ? Sprites.fromJson(json['sprites']) : null;
-    if (json['stats'] != null) {
+    /*if (json['stats'] != null) {
       stats = <Stats>[];
       json['stats'].forEach((v) {
         stats!.add(Stats.fromJson(v));
@@ -99,6 +100,7 @@ class Pokemon {
       });
     }
     weight = json['weight'];
+    */
   }
 
   Map<String, dynamic> toJson() {
@@ -141,6 +143,7 @@ class Pokemon {
       data['types'] = this.types!.map((v) => v.toJson()).toList();
     }
     data['weight'] = this.weight;
+
     return data;
   }
 }
@@ -396,18 +399,18 @@ class Sprites {
       this.versions});
 
   Sprites.fromJson(Map<String, dynamic> json) {
-    backDefault = json['back_default'];
+    /*backDefault = json['back_default'];
     backFemale = json['back_female'];
     backShiny = json['back_shiny'];
-    backShinyFemale = json['back_shiny_female'];
+    backShinyFemale = json['back_shiny_female'];*/
     frontDefault = json['front_default'];
-    frontFemale = json['front_female'];
+    /*frontFemale = json['front_female'];
     frontShiny = json['front_shiny'];
     frontShinyFemale = json['front_shiny_female'];
     other = json['other'] != null ? new Other.fromJson(json['other']) : null;
     versions = json['versions'] != null
         ? new Versions.fromJson(json['versions'])
-        : null;
+        : null;*/
   }
 
   Map<String, dynamic> toJson() {

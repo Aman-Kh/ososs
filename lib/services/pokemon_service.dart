@@ -9,7 +9,7 @@ class PokemonService {
     try {
       Response response = await dio.get('$baseUrl/api/v2/pokemon/${id}');
 
-      print(response);
+      //print(response);
       if (response != null) {
         if (response.data != null) {
           var pokemon = Pokemon.fromJson(response.data);
@@ -24,7 +24,7 @@ class PokemonService {
     }
   }
 
-  Future<List<Pokemon>> getPokemons() async {
+  /*Future<List<Pokemon>> getPokemons() async {
     try {
       var pokemons = <Pokemon>[];
       for (int i = 1; i < 60; i++) {
@@ -38,5 +38,5 @@ class PokemonService {
       print("RESPONSE:${e.toString()}");
       return [];
     }
-  }
+  }*/
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -83,17 +85,7 @@ class _AnimationViewState extends State<AnimationView>
               },
             ),
           ),
-          Center(
-              child: AnimatedSwitcher(
-                  duration: Duration(milliseconds: 50),
-                  transitionBuilder: (child, animation) {
-                    return SlideTransition(
-                        position: Tween(
-                                begin: Offset(0.8, 0.0), end: Offset(0.0, 0.0))
-                            .animate(_animation),
-                        child: child);
-                  },
-                  child: chooseSelectedShape(context, size))),
+          Center(child: chooseSelectedShape(context, size)),
           Padding(
             padding: const EdgeInsets.only(left: 50, right: 50),
             child: Container(
@@ -114,6 +106,10 @@ class _AnimationViewState extends State<AnimationView>
                           context
                               .read<ShapeProvider>()
                               .setSelectedShape(rectangle);
+                          context.read<ShapeProvider>().setBorderRadius(0.0);
+                          context
+                              .read<ShapeProvider>()
+                              .setColor(AppColors.darkPrimaryColor);
                         }
                       },
                       child: Container(
@@ -136,6 +132,11 @@ class _AnimationViewState extends State<AnimationView>
                           context
                               .read<ShapeProvider>()
                               .setSelectedShape(curveRectangle);
+                          context.read<ShapeProvider>().setBorderRadius(12.0);
+
+                          context
+                              .read<ShapeProvider>()
+                              .setColor(AppColors.primaryColor);
                         }
                       },
                       child: Container(
@@ -158,6 +159,9 @@ class _AnimationViewState extends State<AnimationView>
                           context
                               .read<ShapeProvider>()
                               .setSelectedShape(circle);
+                          context.read<ShapeProvider>().setBorderRadius(500.0);
+
+                          context.read<ShapeProvider>().setColor(Colors.red);
                         }
                       },
                       child: Container(
@@ -179,24 +183,16 @@ class _AnimationViewState extends State<AnimationView>
 }
 
 Widget chooseSelectedShape(BuildContext context, Size size) {
-  return Selector<ShapeProvider, Shape>(
-      selector: (context, shapeProvider) => shapeProvider.SelectedShape!,
-      builder: (_, selectedShape, __) {
-        if (selectedShape.name == Constants.RECTANGLE) {
-          return Container(
-            height: size.height / 3,
-            width: size.width / 1.4,
-            color: AppColors.darkPrimaryColor,
-          );
-        }
-        return Container(
-          height: size.height / 3,
-          width: size.width / 1.4,
-          decoration: selectedShape.name == Constants.CIRCLE
-              ? BoxDecoration(shape: BoxShape.circle, color: AppColors.redColor)
-              : BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(12)),
-        );
-      });
+  return Consumer<ShapeProvider>(builder: (_, shapeProvider, __) {
+    return AnimatedContainer(
+      height: size.height / 3,
+      width: size.width / 1.4,
+      curve: Curves.fastOutSlowIn,
+      decoration: BoxDecoration(
+        color: shapeProvider.color,
+        borderRadius: BorderRadius.circular(shapeProvider.Radius),
+      ),
+      duration: Duration(seconds: 1),
+    );
+  });
 }

@@ -43,15 +43,18 @@ class _HomeViewState extends State<HomeView> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('Home'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             height: 70,
-            padding: const EdgeInsets.all(10),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
             width: width,
             child: Consumer<UserProvider>(
               builder: (_, provider, __) {
@@ -78,16 +81,12 @@ class _HomeViewState extends State<HomeView> {
               },
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
           Selector<UserProvider, String>(
             selector: (context, userProvider) => userProvider.user.name!,
             builder: (_, userName, __) {
               print("I GOT INTO SELECTOR");
               return Container(
                   height: 100,
-                  //color: Colors.orange,
                   width: width,
                   padding:
                       EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5),
@@ -103,72 +102,88 @@ class _HomeViewState extends State<HomeView> {
             },
           ),
           SizedBox(
-            height: 300,
+            height: 100,
           ),
-          InkWell(
-            onTap: () {
-              nameController.clear();
-              context.read<UserProvider>().setUserName('');
-            },
-            child: Container(
-              height: 80,
-              padding: EdgeInsets.only(top: 10, bottom: 5, right: 5, left: 5),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Icon(
-                  Icons.delete,
-                  size: 20,
-                  color: AppColors.darkRedColor,
-                ),
-                Text(
-                  "Clear text",
-                  style: AppStyles.blackSmallBoldTextStyle.copyWith(
-                    color: AppColors.darkRedColor,
-                    fontSize: 15,
-                  ),
-                )
-              ]),
-            ),
-          ),
-          Container(
-            width: width / 1.1,
-            height: 50,
-            child: ElevatedButton(
-                onPressed: () async {
-                  context.read<ShapeProvider>().getAllShapes();
-                  //context.go(AppRouter.ANIMATION_VIEW);
-                  GoRouter.of(context).push(AppRouter.ANIMATION_VIEW);
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              InkWell(
+                onTap: () {
+                  nameController.clear();
+                  context.read<UserProvider>().setUserName('');
                 },
-                child: Text(
-                  "Go to Page 1",
-                  style: AppStyles.blackSmallBoldTextStyle.copyWith(
-                    color: AppColors.whiteColor,
-                    fontSize: 15,
-                  ),
+                child: Container(
+                  height: 80,
+                  padding:
+                      EdgeInsets.only(top: 10, bottom: 5, right: 5, left: 5),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          size: 20,
+                          color: AppColors.darkRedColor,
+                        ),
+                        Text(
+                          "Clear text",
+                          style: AppStyles.blackSmallBoldTextStyle.copyWith(
+                            color: AppColors.darkRedColor,
+                            fontSize: 15,
+                          ),
+                        )
+                      ]),
                 ),
-                style: AppStyles.primaryButtonStyle),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: width / 1.1,
-            height: 50,
-            child: ElevatedButton(
-                onPressed: () async {
-                  context.read<PokemonProvider>().getAllPokemons();
+              ),
+              Container(
+                width: width / 1.1,
+                height: 50,
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      context.read<ShapeProvider>().getAllShapes();
+                      context.read<ShapeProvider>().setSelectedShape(
+                          context.read<ShapeProvider>().Shapes[0]);
+                      context.read<ShapeProvider>().setBorderRadius(500.0);
+                      context.read<ShapeProvider>().setColor(Colors.red);
+                      GoRouter.of(context).push(AppRouter.ANIMATION_VIEW);
+                    },
+                    child: Text(
+                      "Go to Page 1",
+                      style: AppStyles.blackSmallBoldTextStyle.copyWith(
+                        color: AppColors.whiteColor,
+                        fontSize: 15,
+                      ),
+                    ),
+                    style: AppStyles.primaryButtonStyle),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: width / 1.1,
+                height: 50,
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      context.read<PokemonProvider>().getAllPokemons();
 
-                  GoRouter.of(context).push(AppRouter.POKEMON_VIEW);
-                },
-                child: Text(
-                  "Go to Page 2",
-                  style: AppStyles.blackSmallBoldTextStyle.copyWith(
-                    color: AppColors.whiteColor,
-                    fontSize: 15,
-                  ),
-                ),
-                style: AppStyles.darkPrimaryButtonStyle),
-          ),
+                      GoRouter.of(context).push(AppRouter.POKEMON_VIEW);
+                    },
+                    child: Text(
+                      "Go to Page 2",
+                      style: AppStyles.blackSmallBoldTextStyle.copyWith(
+                        color: AppColors.whiteColor,
+                        fontSize: 15,
+                      ),
+                    ),
+                    style: AppStyles.darkPrimaryButtonStyle),
+              ),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          )
         ],
       ),
     );

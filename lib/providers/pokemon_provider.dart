@@ -12,8 +12,7 @@ class PokemonProvider extends BaseProvider {
   Future<List<Pokemon>> getAllPokemons() async {
     try {
       print("BEGIN : GET All Pokemons Provider");
-      //var _pokemons = <Pokemon>[];
-      for (int i = 1; i < 60; i++) {
+      for (int i = 1; i < 150; i++) {
         var pokemon = await pokemonService.getPokemonById(i.toString());
         if (_pokemons != null && pokemon != null) {
           _pokemons.add(pokemon!);

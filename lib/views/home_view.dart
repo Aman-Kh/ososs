@@ -48,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
         title: Text('Home'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
